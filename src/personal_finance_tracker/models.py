@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import Column, Date, DateTime, Float, Integer, String
 
@@ -42,7 +42,7 @@ class Transaction(Base):
     created_at = Column(
         DateTime,
         nullable=False,
-        default=datetime.utcnow
+        default=lambda: datetime.now(timezone.utc)
     )
 
 

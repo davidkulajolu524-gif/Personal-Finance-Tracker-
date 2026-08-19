@@ -1,7 +1,7 @@
 from datetime import date
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 # =========================
@@ -61,8 +61,9 @@ class BudgetResponse(BaseModel):
     month: int
     year: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
 # =========================
@@ -80,3 +81,4 @@ class BudgetStatusResponse(BaseModel):
 
     month: int
     year: int
+
