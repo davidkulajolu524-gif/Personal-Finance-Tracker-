@@ -74,3 +74,109 @@ def test_get_transactions():
 
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+def test_get_single_transaction():
+    create_response = client.post(
+        "/transactions/",
+        json={
+            "amount": 2500,
+            "transaction_type": "expense",
+            "category": "Food",
+            "description": "Lunch",
+            "transaction_date": str(date.today()),
+        },
+    )
+
+    assert create_response.status_code == 200
+
+    transaction_id = create_response.json()["id"]
+
+    response = client.get(
+        f"/transactions/{transaction_id}"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["id"] == transaction_id
+    assert data["amount"] == 2500
+    assert data["transaction_type"] == "expense"
+    assert data["category"] == "Food"
+
+
+def test_update_transaction():
+    create_response = client.post(
+        "/transactions/",
+        json={
+            "amount": 1000,
+            "transaction_type": "expense",
+            "category": "Transport",
+            "description": "Bus fare",
+            "transaction_date": str(date.today()),
+        },
+    )
+
+    assert create_response.status_code == 200
+
+    transaction_id = create_response.json()["id"]
+
+    update_response = client.put(
+        f"/transactions/{transaction_id}",
+        json={
+            "amount": 1500,
+            "category": "Transportation",
+        },
+    )
+
+    assert update_response.status_code == 200
+
+    data = update_response.json()
+
+    assert data["id"] == transaction_id
+    assert data["amount"] == 1500
+    assert data["category"] == "Transportation"
+
+
+def test_delete_transaction():
+    create_response = client.post(
+        "/transactions/",
+        json={
+            "amount": 750,
+            "transaction_type": "expense",
+            "category": "Food",
+            "description": "Snack",
+            "transaction_date": str(date.today()),
+        },
+    )
+
+    assert create_response.status_code == 200
+
+    transaction_id = create_response.json()["id"]
+
+    delete_response = client.delete(
+        f"/transactions/{transaction_id}"
+    )
+
+    assert delete_response.status_code == 200
+
+    data = delete_response.json()
+
+    assert data["message"] == "Transaction deleted successfully"
+
+    get_response = client.get(
+        f"/transactions/{transaction_id}"
+    )
+
+    assert get_response.status_code == 404
+
+
+def test_get_nonexistent_transaction():
+    response = client.get(
+        "/transactions/999999"
+    )
+
+    assert response.status_code == 404
+
+    data = response.json()
+
+    assert data["detail"] == "Transaction not found"
