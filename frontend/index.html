@@ -1,0 +1,691 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Personal Finance Tracker</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">₦</div>
+
+            <div>
+                <h1>Finance Tracker</h1>
+                <p>Personal Finance</p>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <button class="nav-item active" data-section="dashboard">
+                <span>▦</span>
+                Dashboard
+            </button>
+
+            <button class="nav-item" data-section="transactions">
+                <span>↕</span>
+                Transactions
+            </button>
+
+            <button class="nav-item" data-section="budgets">
+                <span>◫</span>
+                Budgets
+            </button>
+
+            <button class="nav-item" data-section="reports">
+                <span>▤</span>
+                Reports
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Personal Finance Tracker</p>
+            <span>v1.0</span>
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main-content">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+                <h2 id="pageTitle">Dashboard</h2>
+                <p id="pageSubtitle">
+                    Here's what's happening with your money.
+                </p>
+            </div>
+
+            <button
+                id="addTransactionBtn"
+                class="primary-btn"
+                type="button"
+            >
+                + Add Transaction
+            </button>
+
+        </header>
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section id="dashboardSection" class="page-section active">
+
+            <div class="summary-grid">
+
+                <article class="summary-card balance-card">
+                    <div class="card-label">
+                        <span>Balance</span>
+                    </div>
+
+                    <h3 id="balance">₦0.00</h3>
+
+                    <p>
+                        Your current balance
+                    </p>
+                </article>
+
+
+                <article class="summary-card income-card">
+                    <div class="card-label">
+                        <span>Income</span>
+                    </div>
+
+                    <h3 id="income">₦0.00</h3>
+
+                    <p>
+                        Total money received
+                    </p>
+                </article>
+
+
+                <article class="summary-card expense-card">
+                    <div class="card-label">
+                        <span>Expenses</span>
+                    </div>
+
+                    <h3 id="expenses">₦0.00</h3>
+
+                    <p>
+                        Total money spent
+                    </p>
+                </article>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <!-- CATEGORIES -->
+
+                <article class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Spending by Category</h3>
+                            <p>Where your money is going</p>
+                        </div>
+                    </div>
+
+                    <div
+                        id="categories"
+                        class="category-list"
+                    >
+                        <div class="empty-state">
+                            No spending data yet.
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- RECENT TRANSACTIONS -->
+
+                <article class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Recent Transactions</h3>
+                            <p>Your latest financial activity</p>
+                        </div>
+
+                        <button
+                            id="viewTransactionsBtn"
+                            class="text-btn"
+                            type="button"
+                        >
+                            View all
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="recentTransactions"
+                        class="transaction-list"
+                    >
+                        <div class="empty-state">
+                            No transactions yet.
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TRANSACTIONS
+        ========================== -->
+
+        <section
+            id="transactionsSection"
+            class="page-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <h3>Transactions</h3>
+                    <p>Manage all your income and expenses.</p>
+                </div>
+
+                <button
+                    id="transactionsAddBtn"
+                    class="primary-btn"
+                    type="button"
+                >
+                    + Add Transaction
+                </button>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="transactionsTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div
+                    id="transactionsEmpty"
+                    class="empty-state hidden"
+                >
+                    No transactions found.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             BUDGETS
+        ========================== -->
+
+        <section
+            id="budgetsSection"
+            class="page-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <h3>Budgets</h3>
+                    <p>Set spending limits for your categories.</p>
+                </div>
+
+            </div>
+
+
+            <div class="budget-layout">
+
+                <article class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Create Budget</h3>
+                            <p>Set a monthly spending limit.</p>
+                        </div>
+                    </div>
+
+                    <form id="budgetForm">
+
+                        <div class="form-group">
+
+                            <label for="budgetCategory">
+                                Category
+                            </label>
+
+                            <input
+                                id="budgetCategory"
+                                type="text"
+                                placeholder="e.g. Food"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="budgetAmount">
+                                    Amount
+                                </label>
+
+                                <input
+                                    id="budgetAmount"
+                                    type="number"
+                                    min="1"
+                                    step="0.01"
+                                    placeholder="50000"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="budgetMonth">
+                                    Month
+                                </label>
+
+                                <select id="budgetMonth" required>
+
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="budgetYear">
+                                    Year
+                                </label>
+
+                                <input
+                                    id="budgetYear"
+                                    type="number"
+                                    min="2000"
+                                    max="2100"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <p
+                            id="budgetFormError"
+                            class="form-error"
+                        ></p>
+
+                        <button
+                            class="primary-btn full-width"
+                            type="submit"
+                        >
+                            Create Budget
+                        </button>
+
+                    </form>
+
+                </article>
+
+
+                <article class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Your Budgets</h3>
+                            <p>Current budget limits</p>
+                        </div>
+
+                        <button
+                            id="refreshBudgetsBtn"
+                            class="secondary-btn"
+                            type="button"
+                        >
+                            Refresh
+                        </button>
+
+                    </div>
+
+                    <div id="budgetList">
+
+                        <div class="empty-state">
+                            No budgets yet.
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             REPORTS
+        ========================== -->
+
+        <section
+            id="reportsSection"
+            class="page-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <h3>Reports</h3>
+                    <p>Review your financial activity.</p>
+                </div>
+
+            </div>
+
+
+            <article class="panel">
+
+                <div class="report-controls">
+
+                    <div class="form-group">
+
+                        <label for="reportYear">
+                            Year
+                        </label>
+
+                        <input
+                            id="reportYear"
+                            type="number"
+                            min="2000"
+                            max="2100"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="reportMonth">
+                            Month
+                        </label>
+
+                        <select id="reportMonth">
+
+                            <option value="">All months</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+
+                        </select>
+
+                    </div>
+
+                    <button
+                        id="generateReportBtn"
+                        class="primary-btn"
+                        type="button"
+                    >
+                        Generate Report
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="reportResult"
+                    class="report-result"
+                >
+                    <div class="empty-state">
+                        Select a year and generate a report.
+                    </div>
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         TRANSACTION MODAL
+    ========================== -->
+
+    <div
+        id="transactionModal"
+        class="modal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="transactionModalTitle"
+        >
+
+            <div class="modal-header">
+
+                <div>
+                    <h3 id="transactionModalTitle">
+                        Add Transaction
+                    </h3>
+
+                    <p>
+                        Record your income or expense.
+                    </p>
+                </div>
+
+                <button
+                    id="closeTransactionModal"
+                    class="modal-close"
+                    type="button"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="transactionForm">
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Amount
+                    </label>
+
+                    <input
+                        id="amount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="15000"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="transactionType">
+                            Type
+                        </label>
+
+                        <select
+                            id="transactionType"
+                            required
+                        >
+                            <option value="expense">
+                                Expense
+                            </option>
+
+                            <option value="income">
+                                Income
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="transactionDate">
+                            Date
+                        </label>
+
+                        <input
+                            id="transactionDate"
+                            type="date"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <input
+                        id="category"
+                        type="text"
+                        placeholder="e.g. Food"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="3"
+                        placeholder="What was this transaction for?"
+                    ></textarea>
+
+                </div>
+
+
+                <p
+                    id="formError"
+                    class="form-error"
+                ></p>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="cancelTransaction"
+                        class="secondary-btn"
+                        type="button"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        Save Transaction
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="/app.js"></script>
+
+</body>
+</html>
+```

@@ -1,0 +1,48 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+*.pyo
+*.pyd
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Test/cache files
+.pytest_cache/
+
+# Virtual environments
+.venv/
+
+# Local databases
+*.db# Python-generated files
+__pycache__/
+*.py[oc]
+*.pyo
+*.pyd
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Test/cache files
+.pytest_cache/
+
+# Virtual environments
+.venv/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite
+*.sqlite3# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
