@@ -10,6 +10,16 @@ DATABASE_URL = os.getenv(
 )
 
 
+# Render may provide postgres://.
+# SQLAlchemy expects postgresql://.
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgres://",
+        "postgresql://",
+        1,
+    )
+
+
 class Base(DeclarativeBase):
     pass
 
