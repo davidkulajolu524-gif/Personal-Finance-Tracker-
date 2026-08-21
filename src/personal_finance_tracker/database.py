@@ -24,6 +24,7 @@ if DATABASE_URL.startswith("sqlite"):
 else:
     engine = create_engine(
         DATABASE_URL,
+        pool_pre_ping=True,
     )
 
 
@@ -35,6 +36,4 @@ SessionLocal = sessionmaker(
 
 
 def create_tables():
-    Base.metadata.create_all(
-        bind=engine,
-    )
+    Base.metadata.create_all(bind=engine)
