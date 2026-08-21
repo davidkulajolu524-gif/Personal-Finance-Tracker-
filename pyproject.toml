@@ -9,6 +9,7 @@ dependencies = [
     "sqlalchemy>=2.0.52",
     "uvicorn>=0.52.3",
     "python-multipart>=0.0.7",
+    "psycopg[binary]>=3.3.4",
 ]
 
 [project.scripts]
